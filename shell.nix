@@ -16,6 +16,7 @@ let
     aiohttp
     nest-asyncio
     flask-sqlalchemy
+    flask-caching
     pymysql
   ]);
 in

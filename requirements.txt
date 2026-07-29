@@ -13,4 +13,5 @@ aiohttp
 asyncio
 nest_asyncio
 flask-sqlalchemy
+Flask-Caching
 pymysql
