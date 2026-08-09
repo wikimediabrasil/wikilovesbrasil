@@ -251,24 +251,34 @@ def mapa_markers_data_cached(uf, lang, force_update=False):
 def mapa_markers_data(uf, lang):
     qids_with_image = []
     qids_without_image = []
-    comandos = "var "
+    comandos = ""
     monuments = query_monuments(states_qids[uf.lower()], lang)
+
+    def M(id, lon, lat, icon, label, layers_str):
+        layers = "[" + ", ".join(layers_str) + "]"
+        return f"WlmMarker('{id}', {lon}, {lat}, {icon}, `{label}`, {layers} );\n"
+
     for item in monuments:
-        tooltip = item["label"]
-        tooltip_style = "{direction:'top', offset: [0, -37]}"
-        popup = ("<span style='text-align:center'><b>" + item["label"] + "</b></span><br><br>" + "<a class='custom-link' target='_self' href='" + url_for("monumento", qid=item['item']) + "'><button class='send_button'><i class='fa-solid fa-arrow-up-from-bracket'></i> " + gettext("Ver mais informações e enviar fotografias") + "</div>")
-        popup_style = "{closeButton: false}"
+        id = item["item"]
+        lon = item["coord"][0]
+        lat = item["coord"][1]
+        label = item["label"]
         if "imagem" in item and item["imagem"] != "No-image.png":
-            if "types" in item and item["types"]:
-                comandos += item["item"] + " = L.marker({lon: " + item["coord"][0] + ", lat: " + item["coord"][1] + "}, {icon: greenIcon, item: \"" + item["item"] + "\", label: \"" + item["label"] + "\"})" + ".bindTooltip(\"" + tooltip + "\", " + tooltip_style + ").bindPopup(\"" + popup + "\", " + popup_style + ").on('click', markerOnClick)" + "".join(item["types"]) + ",\n"
+            if "props" in item and item["props"]:
+                icon = "greenIcon"
+                layers = item["props"]
+                comandos += M(id, lon, lat, icon, label, layers)
             qids_with_image.append(item["item"])
         else:
-            comandos += item["item"] + " = L.marker({lon: " + item["coord"][0] + ", lat: " + item["coord"][1] + "}, {icon: redIcon, item: \"" + item["item"] + "\", label: \"" + item["label"] + "\"})" + ".bindTooltip(\"" + tooltip + "\", " + tooltip_style + ").bindPopup(\"" + popup + "\", " + popup_style + ").on('click', markerOnClick).addTo(markers_without_image),\n"
+            icon = "redIcon"
+            layers = ["markers_without_image"]
+            comandos += M(id, lon, lat, icon, label, layers)
             qids_without_image.append(item["item"])
-        comandos = comandos[:-2] + ";\n"
     return {
         "markers": comandos,
-        "markers_list": "[" + ",".join(list(set(qids_without_image+qids_with_image))) + "]",
+        "markers_list": "["
+        + ",".join(list(set(qids_without_image + qids_with_image)))
+        + "]",
     }
 
 
