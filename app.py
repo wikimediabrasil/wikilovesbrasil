@@ -256,6 +256,7 @@ def mapa_markers_data(uf, lang):
 
     def M(id, lon, lat, icon, label, layers_str):
         layers = "[" + ", ".join(layers_str) + "]"
+        label = label.replace("`", r"\`")
         return f"WlmMarker('{id}', {lon}, {lat}, {icon}, `{label}`, {layers} );\n"
 
     for item in monuments:
