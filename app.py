@@ -496,7 +496,8 @@ def update_monuments_cache():
     if cache.get("update_cache"):
         return ("working", 200)
     cache.set("update_cache", "1", timeout=3600)
-    for lang in ["pt_br", "pt", "en", "nl"]:
+    languages = os.listdir(os.path.join(__dir__, "translations"))
+    for lang in languages:
         for uf, qid in states_qids.items():
             print(f"updating {lang}, {uf}={qid}...")
             mapa_markers_data_cached(uf, lang, force_update=True)
