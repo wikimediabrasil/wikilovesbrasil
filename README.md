@@ -1,4 +1,4 @@
-<img src="https://img.shields.io/github/issues/WikiMovimentoBrasil/wikilovesbrasil?style=for-the-badge"/> <img src="https://img.shields.io/github/license/WikiMovimentoBrasil/wikilovesbrasil?style=for-the-badge"/> <img src="https://img.shields.io/github/languages/top/WikiMovimentoBrasil/wikilovesbrasil?style=for-the-badge"/>
+<img src="https://img.shields.io/github/issues/wikimediabrasil/wikilovesbrasil?style=for-the-badge"/> <img src="https://img.shields.io/github/license/WikiMovimentoBrasil/wikilovesbrasil?style=for-the-badge"/> <img src="https://img.shields.io/github/languages/top/WikiMovimentoBrasil/wikilovesbrasil?style=for-the-badge"/>
 
 # Wiki Loves Brasil
 
@@ -39,7 +39,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[GNU General Public License v3.0](https://github.com/WikiMovimentoBrasil/wikiusos/blob/master/LICENSE)
+[GNU General Public License v3.0](https://github.com/wikimediabrasil/wikilovesbrasil/blob/master/LICENSE)
 
 ## Credits
-This application was developed by the [Wiki Movimento Brasil User Group](https://meta.wikimedia.org/wiki/Wiki_Movement_Brazil_User_Group).
+This application was developed by [Wikimedia Brasil](https://meta.wikimedia.org/wiki/Wikimedia_Brasil).

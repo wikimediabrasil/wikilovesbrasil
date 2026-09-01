@@ -268,8 +268,8 @@
     <footer style="text-align:left;position: relative;padding: 0 15px" id="footer">
         <hr>
         <p style="font-size:90%; text-align: justify">
-            {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{_("Wiki Movimento Brasil")}}' href='https://meta.wikimedia.org/wiki/Wiki_Movement_Brazil_User_Group/{{ lang }}'>{{_("Grupo de usuários Wiki Movimento Brasil")}}</a>{% endset %}
-            {{_("<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pelo <i><b>%(projeto)s</b></i>.", projeto=projeto)}}
+            {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{_("Wikimedia Brasil")}}' href='https://meta.wikimedia.org/wiki/Wikimedia_Brasil/{{ lang }}'>{{_("Wikimedia Brasil")}}</a>{% endset %}
+            {{_("<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pela <i><b>%(projeto)s</b></i>.", projeto=projeto)}}
         </p>
     </footer>
 {% endblock %}
@@ -569,7 +569,7 @@
 
         $("#upload-images").on("submit", function (e) {
             e.preventDefault();
-            const error = "{{ _('Ocorreu algum erro! Verifique que fez login e revise o formulário. Caso o erro persista, por favor, reporte em https://github.com/WikiMovimentoBrasil/wikilovesbrasil/issues')}}";
+            const error = "{{ _('Ocorreu algum erro! Verifique que fez login e revise o formulário. Caso o erro persista, por favor, reporte em https://github.com/wikimediabrasil/wikilovesbrasil/issues')}}";
 
             let promises = _Files.map((_file) => {
                 let formData = new FormData();

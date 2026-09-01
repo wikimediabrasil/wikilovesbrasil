@@ -425,7 +425,7 @@ def send_file():
                 message = gettext(u"Error.")
         else:
             message = gettext(u'Ocorreu algum erro! Verifique o formulário e tente novamente. Caso o erro persista, '
-                              u'por favor, reporte em https://github.com/WikiMovimentoBrasil/wikilovesbrasil/issues')
+                              u'por favor, reporte em https://github.com/wikimediabrasil/wikilovesbrasil/issues')
         return jsonify({"message": message, "status": status_code, "filename": form["filename"]})
 
 

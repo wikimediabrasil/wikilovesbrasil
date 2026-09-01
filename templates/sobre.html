@@ -28,15 +28,15 @@
     <div class="w3-container w3-half" style="font-size: 125%; text-align: left; margin-bottom:2rem">
         <p>
             {{ _("Você está pronto(a) para participar do maior concurso fotográfico do mundo?! O aplicativo <b>Wiki Loves Brasil</b> te oferece diversas formas de participar: Enviando suas fotografias dos monumentos brasileiros de maneira simplificada, geolocalizar monumentos ainda sem coordenadas registradas e sugerir monumentos que por acaso não estejam nas listas.") }}<br><br>
-            {{ _("O Wiki Loves Monuments é o maior concurso fotográfico do mundo! A etapa nacional ocorre entre 1º e 30 de setembro de 2023.") }}<br><br>
+            {{ _("O Wiki Loves Monuments é o maior concurso fotográfico do mundo! A etapa nacional ocorre entre 1º e 30 de setembro de 2026.") }}<br><br>
             {{ _("No ano de 2021, o Brasil foi o vencedor da etapa internacional, com a imagem <a target='_blank' href='https://commons.wikimedia.org/wiki/File:Real_Gabinete_Português_de_Leitura_10.jpg' title='Real Gabinete Português de Leitura, por Donatas Dabravolskas'>Real Gabinete Português de Leitura</a>, por Donatas Dabravolskas.") }}<br><br>
-            {{ _("Participe e concorra a prêmios. Mais detalhes na <a target='_blank' href='https://w.wiki/_yjB2' title='Wiki Loves Monuments Brasil 2023'>página do concurso na Wikipédia</a>.") }}
+            {{ _("Participe e concorra a prêmios. Mais detalhes na <a target='_blank' href='https://w.wiki/B7KV' title='Wiki Loves Monuments Brasil'>página do concurso na Wikipédia</a>.") }}
         </p>
         <hr>
         <p>
             {% set flask %}<a target='_blank' href='https://pt.wikipedia.org/wiki/Flask_(framework_web)'><i>{{ _("Flask") }}</i></a>{% endset %}
-            {% set github %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/wikilovesbrasil'>{{ _("GitHub") }}</a>{% endset %}
-            {% set license_code %}<a target='_blank' href='https://github.com/WikiMovimentoBrasil/wikilovesbrasil/blob/master/LICENSE'>{{ _("GPL v3.0") }}</a>{% endset %}
+            {% set github %}<a target='_blank' href='https://github.com/wikimediabrasil/wikilovesbrasil'>{{ _("GitHub") }}</a>{% endset %}
+            {% set license_code %}<a target='_blank' href='https://github.com/wikimediabrasil/wikilovesbrasil/blob/master/LICENSE'>{{ _("GPL v3.0") }}</a>{% endset %}
             {% set license_text %}<a target='_blank' href='https://creativecommons.org/licenses/by-sa/4.0/'>{{ _("CC-BY-SA 4.0 Internacional") }}</a>{% endset %}
             {% set license_maps %}<a target='_blank' href='https://opendatacommons.org/licenses/odbl/1-0/'>{{ _("ODbL v1.0") }}</a>{% endset %}
             {% set license_wikidata %}<a target='_blank' href='https://creativecommons.org/share-your-work/public-domain/cc0/'>{{ _("CC0") }}</a>{% endset %}
@@ -60,8 +60,8 @@
     <footer style="text-align:left;position: relative;padding: 0px 15px 0px 15px" id="footer">
         <hr>
         <p style="font-size:90%; text-align: justify">
-            {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{_("Wiki Movimento Brasil")}}' href='https://meta.wikimedia.org/wiki/Wiki_Movement_Brazil_User_Group/{{ lang }}'>{{_("Grupo de usuários Wiki Movimento Brasil")}}</a>{% endset %}
-            {{_("<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pelo <i><b>%(projeto)s</b></i>.", projeto=projeto)}}
+            {% set projeto %}<a tabindex="0" target='_blank' aria-label='{{_("Wikimedia Brasil")}}' href='https://meta.wikimedia.org/wiki/Wikimedia_Brasil/{{ lang }}'>{{_("Wikimedia Brasil")}}</a>{% endset %}
+            {{_("<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pela <i><b>%(projeto)s</b></i>.", projeto=projeto)}}
         </p>
     </footer>
 {% endblock %}

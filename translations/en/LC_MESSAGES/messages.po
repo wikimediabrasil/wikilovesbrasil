@@ -1,5 +1,5 @@
 # English translations for Wiki Loves Brasil.
-# Copyright (C) 2022 Wiki Movimento Brasil
+# Copyright (C) 2022 Wikimedia Brasil
 # This file is distributed under the same license as the Wiki Loves Brasil
 # project.
 # Éder Porto <eder.porto@wmnobrasil.org>, 2022.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  1.0\n"
 "Report-Msgid-Bugs-To: eder.porto@wmnobrasil.org\n"
-"POT-Creation-Date: 2022-08-30 04:38-0300\n"
+"POT-Creation-Date: 2026-09-01 02:09-0300\n"
 "PO-Revision-Date: 2022-05-26 04:58-0300\n"
 "Last-Translator: Éder Porto <eder.porto@wmnobrasil.org>\n"
 "Language: en\n"
@@ -17,65 +17,79 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.16.0\n"
 
 #: templates/aboutmodal.html:5 templates/sobre.html:9
 #: templates/topnavbar.html:3
 msgid "Sobre"
 msgstr "About"
 
-#: templates/aboutmodal.html:12 templates/sobre.html:30
+#: templates/aboutmodal.html:12 templates/geolocate.html:140
+#: templates/item.html:271 templates/presentationmodal.html:25
+#: templates/sobre.html:63 templates/suggest.html:134
+msgid "Wikimedia Brasil"
+msgstr "Wikimedia Brasil"
+
+#: templates/aboutmodal.html:13 templates/presentationmodal.html:26
+msgid "wikilovesbrasil@wmnobrasil.org"
+msgstr "wikilovesbrasil@wmnobrasil.org"
+
+#: templates/aboutmodal.html:14
 msgid ""
 "Você está pronto(a) para participar do maior concurso fotográfico do "
 "mundo?! O aplicativo <b>Wiki Loves Brasil</b> te oferece diversas formas "
 "de participar: Enviando suas fotografias dos monumentos brasileiros de "
-"maneira simplificada, geolocalizar monumentos ainda sem coordenadas "
-"registradas e sugerir monumentos que por acaso não estejam nas listas."
+"maneira simplificada, geolocalizando monumentos ainda sem coordenadas "
+"registradas e sugerindo monumentos que por acaso não estejam nas listas."
 msgstr ""
 "Are you ready to participate in the biggest photo contest in the world?! "
-"The <b>Wiki Loves Brazil</b> app offers you several ways to participate: "
+"The <b>Wiki Loves Brasil</b> app offers you several ways to participate: "
 "Sending your photographs of Brazilian monuments in a simplified way, "
 "geolocating monuments without registered coordinates and suggest "
 "monuments that happen not to be on the lists."
 
-#: templates/aboutmodal.html:13 templates/sobre.html:31
+#: templates/aboutmodal.html:15 templates/sobre.html:31
 msgid ""
 "O Wiki Loves Monuments é o maior concurso fotográfico do mundo! A etapa "
-"nacional ocorre entre 1º e 30 de setembro de 2022."
+"nacional ocorre entre 1º e 30 de setembro de 2026."
 msgstr ""
 "The Loves Monuments Wiki is the biggest photo contest in the world! The "
-"national stage takes place between September 1st and 30th, 2022."
+"national stage takes place between September 1st and 30th, 2026."
 
-#: templates/aboutmodal.html:14 templates/sobre.html:32
+#: templates/aboutmodal.html:16
 msgid ""
-"No ano de 2021, o Brasil foi o vencedor da etapa internacional, com a "
-"imagem <a target='_blank' "
-"href='https://commons.wikimedia.org/wiki/File:Real_Gabinete_Português_de_Leitura_10.jpg'"
-" title='Real Gabinete Português de Leitura, por Donatas "
-"Dabravolskas'>Real Gabinete Português de Leitura</a>, por Donatas "
-"Dabravolskas."
-msgstr ""
-"In 2021, Brazil was the winner of the international phase, with the image"
-" <a target='_blank' "
-"href='https://commons.wikimedia.org/wiki/File:Real_Gabinete_Português_de_Leitura_10.jpg'"
-" title='Real Portuguese Reading Cabinet, by Donatas Dabravolskas'>Real "
-"Portuguese Reading Cabinet</a>, by Donatas Dabravolskas."
-
-#: templates/aboutmodal.html:15 templates/sobre.html:33
-msgid ""
-"Participe e concorra a prêmios. Mais detalhes na <a target='_blank' "
-"href='https://w.wiki/5Bkv' title='Wiki Loves Monuments Brasil "
-"2022'>página do concurso na Wikipédia</a>."
+"Participe e concorra a prêmios de até R$2500. Mais detalhes na <a "
+"target='_blank' href='https://w.wiki/B7KV' title='Wiki Loves Monuments "
+"Brasil'>página do concurso na Wikipédia</a>."
 msgstr ""
 "Join and compete for prizes. More details on the <a target='_blank' "
-"href='https://w.wiki/5Bkv' title='Wiki Loves Monuments Brasil "
-"2022'>Contest page on Wikipedia</a>."
+"href='https://w.wiki/B7KV' title='Wiki Loves Monuments Brasil'>contest "
+"page on Wikipedia</a>."
 
-#: templates/aboutmodal.html:20 templates/sobre.html:37
+#: templates/aboutmodal.html:17 templates/geolocate.html:141
+#: templates/item.html:272 templates/presentationmodal.html:27
+#: templates/sobre.html:64 templates/suggest.html:135
+#, python-format
+msgid ""
+"<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pela "
+"<i><b>%(projeto)s</b></i>."
+msgstr ""
+"<i>Wiki Loves Brasil</i> is an app developed by "
+"<i><b>%(projeto)s</b></i>."
+
+#: templates/aboutmodal.html:18 templates/presentationmodal.html:28
+#, python-format
+msgid ""
+"Dúvidas, reclamações, sugestões ou elogios: Envie uma mensagem para "
+"%(developer)s."
+msgstr "Questions, complaints, suggestions or compliments: Send a message to "
+"%(developer)s."
+
+#: templates/aboutmodal.html:22 templates/sobre.html:37
 msgid "Flask"
 msgstr "Flask"
 
-#: templates/aboutmodal.html:22 templates/sobre.html:38
+#: templates/aboutmodal.html:23 templates/sobre.html:38
 msgid "GitHub"
 msgstr "GitHub"
 
@@ -83,23 +97,23 @@ msgstr "GitHub"
 msgid "GPL v3.0"
 msgstr "GPL v3.0"
 
-#: templates/aboutmodal.html:26 templates/sobre.html:40
+#: templates/aboutmodal.html:25 templates/sobre.html:40
 msgid "CC-BY-SA 4.0 Internacional"
 msgstr "CC-BY-SA 4.0 International"
 
-#: templates/aboutmodal.html:28 templates/sobre.html:41
+#: templates/aboutmodal.html:26 templates/sobre.html:41
 msgid "ODbL v1.0"
 msgstr "ODbl v1.0"
 
-#: templates/aboutmodal.html:30 templates/sobre.html:42
+#: templates/aboutmodal.html:27 templates/sobre.html:42
 msgid "CC0"
 msgstr "CC0"
 
-#: templates/aboutmodal.html:32 templates/sobre.html:43
+#: templates/aboutmodal.html:28 templates/sobre.html:43
 msgid "Wiki Loves Monuments Map"
 msgstr "Wiki Loves Monuments Map"
 
-#: templates/aboutmodal.html:34 templates/sobre.html:45
+#: templates/aboutmodal.html:30 templates/sobre.html:45
 #, python-format
 msgid ""
 "Este aplicativo é inspirado no %(reference)s, desenvolvido por Paweł "
@@ -108,41 +122,41 @@ msgstr ""
 "This app is inspired in the %(reference)s, developed by Paweł Marynowski "
 "and Stephen LaPorte"
 
-#: templates/aboutmodal.html:35 templates/sobre.html:46
+#: templates/aboutmodal.html:31 templates/sobre.html:46
 #, python-format
 msgid "Este aplicativo foi desenvolvido em %(flask)s."
 msgstr "This app was developed in %(flask)s."
 
-#: templates/aboutmodal.html:36 templates/sobre.html:47
+#: templates/aboutmodal.html:32 templates/sobre.html:47
 #, python-format
 msgid "O código-fonte está disponível no %(github)s."
 msgstr "The source code is available on %(github)s."
 
-#: templates/aboutmodal.html:37 templates/sobre.html:48
+#: templates/aboutmodal.html:33 templates/sobre.html:48
 #, python-format
 msgid "Licença do cógido-fonte: %(license_code)s."
 msgstr "Source code license: %(license_code)s."
 
-#: templates/aboutmodal.html:38 templates/sobre.html:49
+#: templates/aboutmodal.html:34 templates/sobre.html:49
 #, python-format
 msgid "Licença de textos: %(license_text)s."
 msgstr "Text license: %(license_text)s."
 
-#: templates/aboutmodal.html:39 templates/sobre.html:50
+#: templates/aboutmodal.html:35 templates/sobre.html:50
 #, python-format
 msgid "Licença de mapas: %(license_maps)s."
 msgstr "Maps license: %(license_maps)s."
 
-#: templates/aboutmodal.html:40 templates/sobre.html:51
+#: templates/aboutmodal.html:36 templates/sobre.html:51
 #, python-format
 msgid "Licença dos metadados retornados do Wikidata: %(license_wikidata)s."
 msgstr "License of metadata returned from Wikidata: %(license_wikidata)s."
 
-#: templates/aboutmodal.html:41 templates/sobre.html:52
+#: templates/aboutmodal.html:37 templates/sobre.html:52
 msgid "Versão 1.0."
 msgstr "Version 1.0"
 
-#: templates/base.html:12 templates/inicio.html:9
+#: templates/base.html:12
 msgid "Página inicial"
 msgstr "Homepage"
 
@@ -150,8 +164,8 @@ msgstr "Homepage"
 msgid "Wiki Loves Brasil"
 msgstr "Wiki Loves Brazil"
 
-#: templates/base.html:23 templates/base.html:26 templates/inicio.html:17
-#: templates/inicio.html:20 templates/sobre.html:17 templates/sobre.html:20
+#: templates/base.html:23 templates/base.html:26 templates/sobre.html:17
+#: templates/sobre.html:20
 msgid "Logotipo Wiki Loves Monuments Brasil"
 msgstr "Wiki Loves Brazil logo"
 
@@ -175,61 +189,66 @@ msgstr "REPORT ERROR"
 msgid "VOLTAR À PÁGINA INICIAL"
 msgstr "GO BACK TO HOMEPAGE"
 
-#: templates/geolocate.html:22 templates/item.html:299 templates/map.html:21
-#: templates/map_uf.html:154
+#: templates/geolocate.html:22 templates/item.html:285 templates/map.html:21
+#: templates/map_uf.html:90
 msgid "Contribuidores do OpenStreetMap"
 msgstr "OpenStreetMap Contributors"
 
-#: templates/geolocate.html:24 templates/item.html:301 templates/map.html:26
-#: templates/map_uf.html:153
+#: templates/geolocate.html:23 templates/item.html:286 templates/map.html:22
+#: templates/map_uf.html:91
+msgid "Mapas da Wikimedia"
+msgstr "Wikimedia maps"
+
+#: templates/geolocate.html:25 templates/item.html:287 templates/map.html:26
+#: templates/map_uf.html:96
 msgid "Mostre-me onde estou"
 msgstr "Show me where I am"
 
-#: templates/geolocate.html:25
+#: templates/geolocate.html:26
 msgid "Localize no mapa"
 msgstr "Locate on the map"
 
-#: templates/geolocate.html:26 templates/geolocate.html:124
-#: templates/map_uf.html:108
+#: templates/geolocate.html:27 templates/geolocate.html:125
+#: templates/map_uf.html:65
 msgid "Cancelar"
 msgstr "Cancel"
 
-#: templates/geolocate.html:27
+#: templates/geolocate.html:28
 msgid "Ver em tela cheia"
 msgstr "View in full screen"
 
-#: templates/geolocate.html:28
+#: templates/geolocate.html:29
 msgid "Sair da tela cheia"
 msgstr "Exit full screen"
 
-#: templates/geolocate.html:33
+#: templates/geolocate.html:34
 msgid "Localize monumentos"
 msgstr "Locate monuments"
 
-#: templates/geolocate.html:46
+#: templates/geolocate.html:47
 msgid "Filtre os monumentos da tabela pelo município em que estão localizados"
 msgstr ""
 "Filter the monuments in the table by the municipality in which they are "
 "located"
 
-#: templates/geolocate.html:47
+#: templates/geolocate.html:48
 msgid "Digite o nome de um município"
 msgstr "Enter the name of a municipality"
 
-#: templates/geolocate.html:54
+#: templates/geolocate.html:55
 msgid "Imagem"
 msgstr "Image"
 
-#: templates/geolocate.html:55
+#: templates/geolocate.html:56
 msgid "Monumentos sem coordenadas"
 msgstr "Monuments without coordinates"
 
-#: templates/geolocate.html:56 templates/geolocate.html:81
-#: templates/geolocate.html:93
+#: templates/geolocate.html:57 templates/geolocate.html:82
+#: templates/geolocate.html:94
 msgid "Adicionar coordenadas"
 msgstr "Add coordinates"
 
-#: templates/geolocate.html:104
+#: templates/geolocate.html:105
 msgid ""
 "Adicione coordenadas clicando em <i class=\"fa-solid\n"
 "                        fa-map-pin\"></i> e posicionando o marcador no "
@@ -238,58 +257,13 @@ msgstr ""
 "Add coordinates by clicking <i class=\"fa-solid fa-map-pin\"></i> and "
 "placing the marker on the map or manually in the field below."
 
-#: templates/geolocate.html:109
+#: templates/geolocate.html:110
 msgid "Coordenadas"
 msgstr "Coordinates"
 
-#: templates/geolocate.html:128
+#: templates/geolocate.html:129
 msgid "Confirmar"
 msgstr "Confirm"
-
-#: templates/geolocate.html:139 templates/inicio.html:66
-#: templates/item.html:284 templates/sobre.html:63 templates/suggest.html:128
-msgid "Wiki Movimento Brasil"
-msgstr "Wiki Movimento Brasil"
-
-#: templates/geolocate.html:139 templates/inicio.html:66
-#: templates/item.html:284 templates/sobre.html:63 templates/suggest.html:128
-msgid "Grupo de usuários Wiki Movimento Brasil"
-msgstr "Wiki Movement Brazil User Group"
-
-#: templates/geolocate.html:140 templates/inicio.html:67
-#: templates/item.html:285 templates/sobre.html:64 templates/suggest.html:129
-#, python-format
-msgid ""
-"<i>Wiki Loves Brasil</i> é um aplicativo desenvolvido pelo "
-"<i><b>%(projeto)s</b></i>, visando melhorar a experiência dos usuários "
-"que participam do concurso fotográfico Wiki Loves Monuments na "
-"localização e envio de fotografias para o Wikimedia Commons."
-msgstr ""
-"<i>Wiki Loves Brazil</i> is an application developed by "
-"<i><b>%(projeto)s</b></i>, aiming to improve user experience of who "
-"participate in the Wiki Loves Monuments contest at finding and uploading "
-"photographs to Wikimedia Commons."
-
-#: templates/inicio.html:28
-msgid "Bem-vindo(a/e) ao<br><i>Wiki Loves Monuments Brasil 2022</i>"
-msgstr "Welcome to <br><i>Wiki Loves Monuments Brazil 2022</i>"
-
-#: templates/inicio.html:31
-msgid ""
-"Neste aplicativo, você envia suas fotografias do patrimônio histórico "
-"brasileiro e participa do maior concurso fotográfico do mundo!"
-msgstr ""
-"In this application, you send your photographs of the Brazilian "
-"historical heritage and participate in the biggest photo contest in the "
-"world!"
-
-#: templates/inicio.html:45 templates/item.html:267
-msgid "Mapa"
-msgstr "Map"
-
-#: templates/inicio.html:53 templates/item.html:51 templates/topnavbar.html:25
-msgid "Autenticar-se"
-msgstr "Login"
 
 #: templates/item.html:29
 msgid "Envio de imagens"
@@ -319,203 +293,186 @@ msgstr "Choose file(s)"
 msgid "Autentique-se para enviar suas imagens"
 msgstr "Login to upload your images"
 
-#: templates/item.html:83
+#: templates/item.html:51 templates/topnavbar.html:13
+msgid "Autenticar-se"
+msgstr "Login"
+
+#: templates/item.html:84
 #, python-format
 msgid "%(number_images)s imagens"
 msgstr "%(number_images)s images"
 
-#: templates/item.html:90
+#: templates/item.html:86
+msgid "Única imagem"
+msgstr "Only image"
+
+#: templates/item.html:94
 msgid "Artigo na Wikipédia"
 msgstr "Article in Wikipedia"
 
-#: templates/item.html:96
+#: templates/item.html:100
 msgid "Item no Wikidata"
 msgstr "Wikidata item"
 
-#: templates/item.html:121
+#: templates/item.html:127
 msgid "Tipos de imagens"
 msgstr "Image types"
 
-#: templates/item.html:124
+#: templates/item.html:133
 msgid "Abaixo estão os principais tipos de fotografias de monumentos."
 msgstr "Below are the main types of monument photographs."
 
-#: templates/item.html:132 templates/item.html:133
-msgid "Imagem do exterior"
-msgstr "Illustrative image"
-
-#: templates/item.html:139 templates/item.html:140 templates/item.html:388
-#: templates/map_uf.html:89
-msgid "Imagem do interior"
-msgstr "Interior image"
-
-#: templates/item.html:148 templates/item.html:149 templates/item.html:389
-#: templates/map_uf.html:90
-msgid "Imagem da entrada"
-msgstr "Entrance image"
-
-#: templates/item.html:155 templates/item.html:156 templates/item.html:390
-#: templates/map_uf.html:91
-msgid "Imagem da inscrição"
-msgstr "Inscription image"
-
-#: templates/item.html:164 templates/item.html:165 templates/item.html:394
-#: templates/map_uf.html:95
-msgid "Vista noturna"
-msgstr "Night view"
-
-#: templates/item.html:171 templates/item.html:172 templates/item.html:393
-#: templates/map_uf.html:94
-msgid "Vista aérea"
-msgstr "Aerial view"
-
-#: templates/item.html:180 templates/item.html:181 templates/item.html:391
-#: templates/map_uf.html:92
-msgid "Placa comemorativa"
-msgstr "Commemorative plaque"
-
-#: templates/item.html:187 templates/item.html:188 templates/item.html:392
-#: templates/map_uf.html:93
-msgid "Placa com o nome do lugar"
-msgstr "Plaque with the name of the place"
-
-#: templates/item.html:196 templates/item.html:197 templates/item.html:397
-#: templates/map_uf.html:98
-msgid "Vista"
-msgstr "View"
-
-#: templates/item.html:203 templates/item.html:204 templates/item.html:395
-#: templates/map_uf.html:96
-msgid "Vista panorâmica"
-msgstr "Panoramic view"
-
-#: templates/item.html:212 templates/item.html:213 templates/item.html:396
-#: templates/map_uf.html:97
-msgid "Vista no inverno"
-msgstr "Winter view"
-
-#: templates/item.html:219 templates/item.html:220 templates/item.html:398
-#: templates/map_uf.html:99
-msgid "Fotoesfera"
-msgstr "Photosphere image"
-
-#: templates/item.html:228 templates/item.html:229 templates/item.html:399
-#: templates/map_uf.html:100
-msgid "Imagem da planta"
-msgstr "Image of design plans"
-
-#: templates/item.html:235 templates/item.html:236 templates/item.html:400
-#: templates/map_uf.html:101
-msgid "Imagem do túmulo"
-msgstr "Image of grave"
-
-#: templates/item.html:250
-msgid "Wikipédia"
-msgstr "Wikipedia"
-
-#: templates/item.html:255
-msgid "Leia mais na Wikipédia!"
-msgstr "Read more on Wikipedia!"
-
-#: templates/item.html:300 templates/map.html:22 templates/map_uf.html:155
-msgid "Mapas da Wikimedia"
-msgstr "Wikimedia maps"
-
-#: templates/item.html:366
-msgid "Remover"
-msgstr "Remove"
-
-#: templates/item.html:371
-msgid "Título: "
-msgstr "Title: "
-
-#: templates/item.html:374
-msgid "Nome do arquivo"
-msgstr "Filename"
-
-#: templates/item.html:376
-msgid "Data"
-msgstr "Date"
-
-#: templates/item.html:378
-msgid "Coordenadas Geográficas"
-msgstr "Coordinates"
-
-#: templates/item.html:383
-msgid "Típo: "
-msgstr "Type"
-
-#: templates/item.html:386 templates/map_uf.html:86
-msgid "Não tenho certeza"
-msgstr "I'm not sure"
-
-#: templates/item.html:386 templates/map_uf.html:86
-msgid "Selecione o tipo de imagem (opcional)"
-msgstr "Select the image type (optional)"
-
-#: templates/item.html:387 templates/map_uf.html:88
+#: templates/item.html:140 templates/item.html:373 templates/map_uf.html:48
 msgid "Imagem ilustrativa do monumento"
 msgstr "Illustrative image of the monument"
 
-#: templates/item.html:387 templates/map_uf.html:88
+#: templates/item.html:142 templates/item.html:373 templates/map_uf.html:48
 msgid "Imagem do exterior/Imagem ilustrativa"
 msgstr "Illustrative image"
 
-#: templates/item.html:388 templates/map_uf.html:89
+#: templates/item.html:147 templates/item.html:374 templates/map_uf.html:49
 msgid "Vista do interior de um edifício ou espaço fechado"
 msgstr "View from inside a building or enclosed space"
 
-#: templates/item.html:389 templates/map_uf.html:90
+#: templates/item.html:149 templates/item.html:374 templates/map_uf.html:49
+msgid "Imagem do interior do monumento"
+msgstr "Image of the interior of the monument"
+
+#: templates/item.html:156
+msgid "Vista da entrada de um edifício ou espaço fechado, vista do lado"
+msgstr "View of the entrance to a building or enclosed space, viewed from the outside"
+
+#: templates/item.html:158
+msgid "Imagem da entrada vista de fora "
+msgstr "Entrance image from outside"
+
+#: templates/item.html:163 templates/item.html:376 templates/map_uf.html:51
+msgid "Imagem de inscrições no monumento"
+msgstr "Image of inscriptions on the monument"
+
+#: templates/item.html:165 templates/item.html:376 templates/map_uf.html:51
+msgid "Imagem de inscrição no monumento"
+msgstr "Image of inscriptions on the monument"
+
+#: templates/item.html:172 templates/item.html:380 templates/map_uf.html:55
+msgid "Monumento ao entardecer ou à noite"
+msgstr "Monument at dusk or at night"
+
+#: templates/item.html:174 templates/item.html:380 templates/map_uf.html:55
+msgid "Vista noturna ou ao entardecer"
+msgstr "Night view"
+
+#: templates/item.html:179 templates/item.html:379 templates/map_uf.html:54
+msgid "Fotografia de um monumento tirada do ar, por um drone, por exemplo"
+msgstr "Photograph of a monument taken from the air, by a drone, for example"
+
+#: templates/item.html:181
+msgid "Vista aérea"
+msgstr "Aerial view"
+
+#: templates/item.html:188 templates/item.html:377 templates/map_uf.html:52
+msgid "Imagem de placa de inauguração ou inscrição mencionando o monumento"
+msgstr "Image of inauguration plaque or inscription mentioning the monument"
+
+#: templates/item.html:190 templates/item.html:377 templates/map_uf.html:52
+msgid "Placa comemorativa ou de inauguração"
+msgstr "Commemorative plaque"
+
+#: templates/item.html:195 templates/item.html:378 templates/map_uf.html:53
+msgid "Imagem de placa de trânsito com nome de local"
+msgstr "Image of road sign with place name"
+
+#: templates/item.html:197 templates/item.html:378 templates/map_uf.html:53
+msgid "Placa de trânsito com o nome do monumento"
+msgstr "Image of road sign with place name"
+
+#: templates/item.html:204 templates/item.html:382 templates/map_uf.html:57
+msgid "Imagem que o observador vê estando no monumento"
+msgstr "Image that the observer sees from the monument"
+
+#: templates/item.html:206 templates/item.html:382 templates/map_uf.html:57
+msgid "Vista a partir do monumento"
+msgstr "View from the monument"
+
+#: templates/item.html:211 templates/item.html:381 templates/map_uf.html:56
+msgid "Ampla vista geral que contém o monumento"
+msgstr "Wide overview that contains the monument"
+
+#: templates/item.html:213 templates/item.html:381 templates/map_uf.html:56
+msgid "Imagem panorâmica do monumento"
+msgstr "Panoramic image of the monument"
+
+#: templates/item.html:220 templates/item.html:383 templates/map_uf.html:58
+msgid "Imagem representando a planta de um edifício ou local"
+msgstr "Image representing the floor plan of a building or site"
+
+#: templates/item.html:222 templates/item.html:383 templates/map_uf.html:58
+msgid "Imagem da planta de um edifício"
+msgstr "Image representing the floor plan of a building or site"
+
+#: templates/item.html:237
+msgid "Wikipédia"
+msgstr "Wikipedia"
+
+#: templates/item.html:242
+msgid "Leia mais na Wikipédia!"
+msgstr "Read more on Wikipedia!"
+
+#: templates/item.html:254
+msgid "Mapa"
+msgstr "Map"
+
+#: templates/item.html:352
+msgid "Remover"
+msgstr "Remove"
+
+#: templates/item.html:352
+msgid "Enviando"
+msgstr "Sending"
+
+#: templates/item.html:357
+msgid "Título: "
+msgstr "Title: "
+
+#: templates/item.html:360
+msgid "Nome do arquivo"
+msgstr "Filename"
+
+#: templates/item.html:362
+msgid "Data"
+msgstr "Date"
+
+#: templates/item.html:364
+msgid "Coordenadas Geográficas"
+msgstr "Coordinates"
+
+#: templates/item.html:369
+msgid "Típo: "
+msgstr "Type"
+
+#: templates/item.html:372 templates/map_uf.html:46
+msgid "Não tenho certeza"
+msgstr "I'm not sure"
+
+#: templates/item.html:372 templates/map_uf.html:46
+msgid "Selecione o tipo de imagem (opcional)"
+msgstr "Select the image type (optional)"
+
+#: templates/item.html:375 templates/map_uf.html:50
 msgid "Vista da entrada de um edifício ou espaço fechado, vista do lado de fora"
 msgstr ""
 "View of the entrance to a building or enclosed space, viewed from the "
 "outside"
 
-#: templates/item.html:390 templates/map_uf.html:91
-msgid "Imagem de inscrições no monumento"
-msgstr "Image of inscriptions on the monument"
+#: templates/item.html:375 templates/map_uf.html:50
+msgid "Imagem da entrada vista de fora"
+msgstr "Entrance image from outside"
 
-#: templates/item.html:391 templates/map_uf.html:92
-msgid "Imagem de placa de inauguração ou inscrição mencionando o monumento"
-msgstr "Image of inauguration plaque or inscription mentioning the monument"
+#: templates/item.html:379 templates/map_uf.html:54
+msgid "Vista aérea do monumento"
+msgstr "Aerial view of the monument"
 
-#: templates/item.html:392 templates/map_uf.html:93
-msgid "Imagem de placa de trânsito com nome de local"
-msgstr "Image of road sign with place name"
-
-#: templates/item.html:393 templates/map_uf.html:94
-msgid "Fotografia de um monumento tirada do ar, por um drone, por exemplo"
-msgstr "Photograph of a monument taken from the air, by a drone, for example"
-
-#: templates/item.html:394 templates/map_uf.html:95
-msgid "Monumento ao entardecer ou à noite"
-msgstr "Monument at dusk or at night"
-
-#: templates/item.html:395 templates/map_uf.html:96
-msgid "Ampla vista geral que contém o monumento"
-msgstr "Wide overview that contains the monument"
-
-#: templates/item.html:396 templates/map_uf.html:97
-msgid "Imagem do monumento no inverno, de preferência com neve"
-msgstr "Image of the monument in winter, preferably with snow"
-
-#: templates/item.html:397 templates/map_uf.html:98
-msgid "Vista a partir do monumento"
-msgstr "View from the monument"
-
-#: templates/item.html:398 templates/map_uf.html:99
-msgid "Imagem com campo de visão de 360 por 180 graus"
-msgstr "Image with 360 by 180 degree field of view"
-
-#: templates/item.html:399 templates/map_uf.html:100
-msgid "Imagem representando a planta de um edifício ou local"
-msgstr "Image representing the floor plan of a building or site"
-
-#: templates/item.html:400 templates/map_uf.html:101
-msgid "Imagem de um túmulo, lápide ou jazigo"
-msgstr "Image of a tomb or tombstone"
-
-#: templates/item.html:572
+#: templates/item.html:555
 #, python-format
 msgid ""
 "Eu, %(username)s, detentor(a) dos direitos autorais desta(s) imagem(ns), "
@@ -534,19 +491,23 @@ msgstr ""
 "long as they credit me and share any derivative works under this same "
 "license."
 
-#: templates/item.html:573
+#: templates/item.html:556
 msgid "Enviar imagem(ns)"
 msgstr "Send image(s)"
 
-#: templates/item.html:580
+#: templates/item.html:572
 msgid ""
 "Ocorreu algum erro! Verifique que fez login e revise o formulário. Caso o"
 " erro persista, por favor, reporte em "
-"https://github.com/WikiMovimentoBrasil/wikilovesbrasil/issues"
+"https://github.com/wikimediabrasil/wikilovesbrasil/issues"
 msgstr ""
 "An error has occurred! Verify that you are logged in and review the form."
 " If error persists, please report it to "
-"https://github.com/WikiMovimentoBrasil/wikilovesbrasil/issues"
+"https://github.com/wikimediabrasil/wikilovesbrasil/issues"
+
+#: templates/item.html:604
+msgid "Arquivo enviado"
+msgstr "File sent"
 
 #: templates/langmodal.html:5
 msgid "Selecione um idioma"
@@ -560,31 +521,115 @@ msgstr "You selected:"
 msgid "Selecione uma região no mapa"
 msgstr "Select a region on the map"
 
-#: templates/map.html:27 templates/topnavbar.html:27
+#: templates/map.html:27 templates/topnavbar.html:15
 msgid "Menu"
 msgstr "Menu"
 
-#: templates/map.html:29 templates/map_uf.html:137
+#: templates/map.html:29 templates/map_uf.html:94
 msgid "Mudar de idioma"
 msgstr "Change language"
 
-#: templates/map.html:30 templates/map_uf.html:140
+#: templates/map.html:30 templates/map_uf.html:101
 msgid "Informações sobre o aplicativo"
 msgstr "App information"
 
-#: templates/map.html:35
+#: templates/map.html:31 templates/map.html:32 templates/suggest.html:62
+msgid "Selecione um estado"
+msgstr "Select a state"
+
+#: templates/map.html:37
 msgid "Brasil"
 msgstr "Brazil"
 
-#: templates/map.html:51 templates/map_uf.html:33
+#: templates/map_uf.html:14
+msgid "WLM Brasil"
+msgstr "WLM Brasil"
+
+#: templates/map_uf.html:25 templates/map_uf.html:66 templates/map_uf.html:99
+msgid "Filtrar"
+msgstr "Filter"
+
+#: templates/map_uf.html:34
+msgid "Monumentos com ou sem imagens?"
+msgstr "Monuments with or without images"
+
+#: templates/map_uf.html:36
+msgid "Ambos"
+msgstr "Both"
+
+#: templates/map_uf.html:37
+msgid "Com"
+msgstr "With"
+
+#: templates/map_uf.html:38
+msgid "Sem"
+msgstr "Without"
+
+#: templates/map_uf.html:44
+msgid "Tipos de imagem:"
+msgstr "Image types:"
+
+#: templates/map_uf.html:47
+msgid "Todos os tipos"
+msgstr "All types"
+
+#: templates/map_uf.html:92
+msgid "Pesquisar"
+msgstr "Search"
+
+#: templates/map_uf.html:93
+msgid "Voltar para o mapa principal"
+msgstr "Back to main map"
+
+#: templates/map_uf.html:97
+msgid "Desagrupar monumentos"
+msgstr "Ungroup monuments"
+
+#: templates/map_uf.html:98
+msgid "Agrupar monumentos"
+msgstr "Group monuments"
+
+#: templates/map_uf.html:100
+msgid "Filtrar os monumentos"
+msgstr "Filter the monuments"
+
+#: templates/map_uf.html:102
+msgid "Salvar seleção"
+msgstr "Save selection"
+
+#: templates/map_uf.html:103
+msgid "Selecionar os monumentos"
+msgstr "Select the monuments"
+
+#: templates/map_uf.html:104
+msgid "Limpar seleção"
+msgstr "Clear selection"
+
+#: templates/map_uf.html:105
+msgid "Selecionar"
+msgstr "Select"
+
+#: templates/map_uf.html:106
+msgid "Adicionar coordenadas a monumentos"
+msgstr "Add coordinates to monuments"
+
+#: templates/map_uf.html:107
+msgid "Sugerir monumentos para o mapa"
+msgstr "Sugest monuments for the map"
+
+#: templates/map_uf.html:110
+msgid "Selecione ou pesquise um monumento"
+msgstr "Select or search a monument"
+
+#: templates/presentationmodal.html:5
 msgid "Seja bem-vindo(a/e)!"
 msgstr "Welcome!"
 
-#: templates/map.html:57 templates/map_uf.html:39
+#: templates/presentationmodal.html:11
 msgid "Olá, gostaríamos de te dar as boas-vindas!"
 msgstr "Hello, we would like to welcome you!"
 
-#: templates/map.html:58 templates/map_uf.html:40
+#: templates/presentationmodal.html:12
 msgid ""
 "O <b>Wiki Loves Brasil</b> é um aplicativo de envio de imagens para a "
 "etapa nacional do maior concurso fotográfico do mundo, o <b><i>Wiki Loves"
@@ -594,7 +639,7 @@ msgstr ""
 "the national phase of the biggest photo contest in the world, the "
 "<b><i>Wiki Loves Monuments</i></b>!"
 
-#: templates/map.html:59 templates/map_uf.html:41
+#: templates/presentationmodal.html:13
 msgid ""
 "Envie suas fotografias do patrimônio histórico brasileiro durante o mês "
 "de setembro para participar e concorrer a prêmios."
@@ -602,7 +647,7 @@ msgstr ""
 "Submit your photographs of the Brazilian historical heritage during the "
 "month of September to participate and compete for prizes."
 
-#: templates/map.html:61 templates/map_uf.html:43
+#: templates/presentationmodal.html:15
 msgid ""
 "Comece selecionando uma subdivisão no mapa para ver os monumentos da "
 "região."
@@ -610,117 +655,56 @@ msgstr ""
 "Start by selecting a subdivision on the map to see the monuments of the "
 "region."
 
-#: templates/map.html:63 templates/map_uf.html:45
+#: templates/presentationmodal.html:18
+msgid "Logo da Wikipédia"
+msgstr "Logo of Wikipedia"
+
+#: templates/presentationmodal.html:19
 msgid "https://pt.wikipedia.org/wiki/Wikipédia:Wiki_Loves_Monuments/Brasil"
 msgstr "https://pt.wikipedia.org/wiki/Wikipédia:Wiki_Loves_Monuments/Brasil"
 
-#: templates/map.html:66 templates/map_uf.html:48
+#: templates/presentationmodal.html:20
 msgid "Visite a página do concurso na Wiki"
 msgstr "Visit the contest page on the Wiki"
 
-#: templates/map.html:72 templates/map_uf.html:54
-msgid "Saiba mais sobre este aplicativo"
-msgstr "Learn more about this app"
+#: templates/sobre.html:30
+msgid ""
+"Você está pronto(a) para participar do maior concurso fotográfico do "
+"mundo?! O aplicativo <b>Wiki Loves Brasil</b> te oferece diversas formas "
+"de participar: Enviando suas fotografias dos monumentos brasileiros de "
+"maneira simplificada, geolocalizar monumentos ainda sem coordenadas "
+"registradas e sugerir monumentos que por acaso não estejam nas listas."
+msgstr ""
+"Are you ready to participate in the biggest photo contest in the world?! "
+"The <b>Wiki Loves Brazil</b> app offers you several ways to participate: "
+"Sending your photographs of Brazilian monuments in a simplified way, "
+"geolocating monuments without registered coordinates and suggest "
+"monuments that happen not to be on the lists."
 
-#: templates/map_uf.html:16
-msgid "WLM Brasil"
-msgstr "WLM Brasil"
+#: templates/sobre.html:32
+msgid ""
+"No ano de 2021, o Brasil foi o vencedor da etapa internacional, com a "
+"imagem <a target='_blank' "
+"href='https://commons.wikimedia.org/wiki/File:Real_Gabinete_Português_de_Leitura_10.jpg'"
+" title='Real Gabinete Português de Leitura, por Donatas "
+"Dabravolskas'>Real Gabinete Português de Leitura</a>, por Donatas "
+"Dabravolskas."
+msgstr ""
+"In 2021, Brazil was the winner of the international phase, with the image"
+" <a target='_blank' "
+"href='https://commons.wikimedia.org/wiki/File:Real_Gabinete_Português_de_Leitura_10.jpg'"
+" title='Real Portuguese Reading Cabinet, by Donatas Dabravolskas'>Real "
+"Portuguese Reading Cabinet</a>, by Donatas Dabravolskas."
 
-#: templates/map_uf.html:47
-msgid "Logotipo"
-msgstr "Logo"
-
-#: templates/map_uf.html:65 templates/map_uf.html:109 templates/map_uf.html:145
-msgid "Filtrar"
-msgstr "Filter"
-
-#: templates/map_uf.html:74
-msgid "Monumentos com ou sem imagens?"
-msgstr "Monuments with or without images"
-
-#: templates/map_uf.html:76
-msgid "Ambos"
-msgstr "Both"
-
-#: templates/map_uf.html:77
-msgid "Com"
-msgstr "With"
-
-#: templates/map_uf.html:78
-msgid "Sem"
-msgstr "Without"
-
-#: templates/map_uf.html:84
-msgid "Tipos de imagem:"
-msgstr "Image types:"
-
-#: templates/map_uf.html:87 templates/map_uf.html:152
-msgid "Todos os tipos"
-msgstr "All types"
-
-#: templates/map_uf.html:133
-msgid "Filtre os monumentos"
-msgstr "Filter the monuments"
-
-#: templates/map_uf.html:134
-msgid "Selecione os monumentos"
-msgstr "Select the monuments"
-
-#: templates/map_uf.html:135
-msgid "Limpar seleção"
-msgstr "Clear selection"
-
-#: templates/map_uf.html:136
-msgid "Voltar para o mapa principal"
-msgstr "Back to main map"
-
-#: templates/map_uf.html:138
-msgid "Desagrupar monumentos"
-msgstr "Ungroup monuments"
-
-#: templates/map_uf.html:139
-msgid "Agrupar monumentos"
-msgstr "Group monuments"
-
-#: templates/map_uf.html:141
-msgid "Adicione coordenadas a monumentos"
-msgstr "Add coordinates to monuments"
-
-#: templates/map_uf.html:142
-msgid "Sugira monumentos para o mapa"
-msgstr "Sugest monuments for the map"
-
-#: templates/map_uf.html:143
-msgid "Desagrupar"
-msgstr "Ungroup"
-
-#: templates/map_uf.html:144
-msgid "Agrupar"
-msgstr "Group"
-
-#: templates/map_uf.html:146
-msgid "Imprimir mapa"
-msgstr "Print map"
-
-#: templates/map_uf.html:147
-msgid "Paisagem"
-msgstr "Landscape"
-
-#: templates/map_uf.html:148
-msgid "Retrato"
-msgstr "Portrait"
-
-#: templates/map_uf.html:149
-msgid "Salvar seleção"
-msgstr "Save selection"
-
-#: templates/map_uf.html:150
-msgid "Selecionar"
-msgstr "Select"
-
-#: templates/map_uf.html:151
-msgid "Nenhum tipo"
-msgstr "No type"
+#: templates/sobre.html:33
+msgid ""
+"Participe e concorra a prêmios. Mais detalhes na <a target='_blank' "
+"href='https://w.wiki/B7KV' title='Wiki Loves Monuments Brasil'>página do "
+"concurso na Wikipédia</a>."
+msgstr ""
+"Join and compete for prizes. More details on the <a target='_blank' "
+"href='https://w.wiki/B7KV' title='Wiki Loves Monuments Brasil'>contest "
+"page on Wikipedia</a>."
 
 #: templates/suggest.html:17
 msgid "Sugira monumentos"
@@ -736,150 +720,154 @@ msgstr ""
 "Monuments Brasil Wiki maps or lists."
 
 #: templates/suggest.html:48
+msgid "Qual seu nome de usuário? <sup style=\"color:#990000\">*</sup>"
+msgstr "What is your username? <sup style=\"color:#990000\">*</sup>"
+
+#: templates/suggest.html:51
+msgid "Digite o seu nome de usuário"
+msgstr "Enter your username"
+
+#: templates/suggest.html:54
 msgid "Qual o nome do monumento? <sup style=\"color:#990000\">*</sup>"
 msgstr "What is the name of the monument? <sup style=\"color:#990000\">*</sup>"
 
-#: templates/suggest.html:51
+#: templates/suggest.html:57
 msgid "Digite o nome do monumento"
 msgstr "Enter the name of the monument"
 
-#: templates/suggest.html:54
+#: templates/suggest.html:60
 msgid "Em qual estado está localizado? <sup style=\"color:#990000\">*</sup>"
 msgstr "In which state is it located? <sup style=\"color:#990000\">*</sup>"
 
-#: templates/suggest.html:56
-msgid "Selecione um estado"
-msgstr "Select a state"
-
-#: templates/suggest.html:57
+#: templates/suggest.html:63
 msgid "Região Norte"
 msgstr "North Region"
 
-#: templates/suggest.html:58
+#: templates/suggest.html:64
 msgid "Acre"
 msgstr "Acre"
 
-#: templates/suggest.html:59
+#: templates/suggest.html:65
 msgid "Amapá"
 msgstr "Amapá"
 
-#: templates/suggest.html:60
+#: templates/suggest.html:66
 msgid "Amazonas"
 msgstr "Amazonas"
 
-#: templates/suggest.html:61
+#: templates/suggest.html:67
 msgid "Pará"
 msgstr "Pará"
 
-#: templates/suggest.html:62
+#: templates/suggest.html:68
 msgid "Rondônia"
 msgstr "Rondônia"
 
-#: templates/suggest.html:63
+#: templates/suggest.html:69
 msgid "Roraima"
 msgstr "Roraima"
 
-#: templates/suggest.html:64
+#: templates/suggest.html:70
 msgid "Tocantins"
 msgstr "Tocantins"
 
-#: templates/suggest.html:66
+#: templates/suggest.html:72
 msgid "Região Nordeste"
 msgstr "Northeast Region"
 
-#: templates/suggest.html:67
+#: templates/suggest.html:73
 msgid "Alagoas"
 msgstr "Alagoas"
 
-#: templates/suggest.html:68
+#: templates/suggest.html:74
 msgid "Bahia"
 msgstr "Bahia"
 
-#: templates/suggest.html:69
+#: templates/suggest.html:75
 msgid "Ceará"
 msgstr "Ceará"
 
-#: templates/suggest.html:70
+#: templates/suggest.html:76
 msgid "Maranhão"
 msgstr "Maranhão"
 
-#: templates/suggest.html:71
+#: templates/suggest.html:77
 msgid "Paraíba"
 msgstr "Paraíba"
 
-#: templates/suggest.html:72
+#: templates/suggest.html:78
 msgid "Pernambuco"
 msgstr "Pernambuco"
 
-#: templates/suggest.html:73
+#: templates/suggest.html:79
 msgid "Piauí"
 msgstr "Piauí"
 
-#: templates/suggest.html:74
+#: templates/suggest.html:80
 msgid "Rio Grande do Norte"
 msgstr "Rio Grande do Norte"
 
-#: templates/suggest.html:75
+#: templates/suggest.html:81
 msgid "Sergipe"
 msgstr "Sergipe"
 
-#: templates/suggest.html:77
+#: templates/suggest.html:83
 msgid "Região Centro-Oeste"
 msgstr "Midwest Region"
 
-#: templates/suggest.html:78
+#: templates/suggest.html:84
 msgid "Distrito Federal"
 msgstr "Distrito Federal"
 
-#: templates/suggest.html:79
+#: templates/suggest.html:85
 msgid "Goiás"
 msgstr "Goiás"
 
-#: templates/suggest.html:80
+#: templates/suggest.html:86
 msgid "Mato Grosso"
 msgstr "Mato Grosso"
 
-#: templates/suggest.html:81
+#: templates/suggest.html:87
 msgid "Mato Grosso do Sul"
 msgstr "Mato Grosso do Sul"
 
-#: templates/suggest.html:83
+#: templates/suggest.html:89
 msgid "Região Sudeste"
 msgstr "Southeast"
 
-#: templates/suggest.html:84
+#: templates/suggest.html:90
 msgid "Espírito Santo"
 msgstr "Espírito Santo"
 
-#: templates/suggest.html:85
+#: templates/suggest.html:91
 msgid "Minas Gerais"
 msgstr "Minas Gerais"
 
-#: templates/suggest.html:86
+#: templates/suggest.html:92
 msgid "Rio de Janeiro"
 msgstr "Rio de Janeiro"
 
-#: templates/suggest.html:87
+#: templates/suggest.html:93
 msgid "São Paulo"
 msgstr "São Paulo"
 
-#: templates/suggest.html:89
+#: templates/suggest.html:95
 msgid "Região Sul"
 msgstr "South Region"
 
-#: templates/suggest.html:90
+#: templates/suggest.html:96
 msgid "Paraná"
 msgstr "Paraná"
 
-#: templates/suggest.html:91
+#: templates/suggest.html:97
 msgid "Rio Grande do Sul"
 msgstr "Rio Grande do Sul"
 
-#: templates/suggest.html:92
+#: templates/suggest.html:98
 msgid "Santa Catarina"
 msgstr "Santa Catarina"
 
-#: templates/suggest.html:97
+#: templates/suggest.html:103
 msgid ""
 "Em qual(is) município(s) está localizado? <sup "
 "style=\"color:#990000\">*</sup>"
@@ -887,19 +875,19 @@ msgstr ""
 "In which municipality(ies) is located? <sup "
 "style=\"color:#990000\">*</sup>"
 
-#: templates/suggest.html:100
+#: templates/suggest.html:106
 msgid "Digite o nome do município"
 msgstr "Enter the name of the municipality"
 
-#: templates/suggest.html:103
+#: templates/suggest.html:109
 msgid "Você sabe o endereço?"
 msgstr "Do you know the address?"
 
-#: templates/suggest.html:105
+#: templates/suggest.html:111
 msgid "Digite o endereço"
 msgstr "Enter the address"
 
-#: templates/suggest.html:108
+#: templates/suggest.html:114
 msgid ""
 "Você possui um link para referência sobre o monumento? Se sim, cole-o "
 "abaixo: <sup style=\"color:#990000\">*</sup>"
@@ -907,15 +895,15 @@ msgstr ""
 "Do you have a link to reference the monument? If yes, paste it below: "
 "<sup style=\"color:#990000\">*</sup>"
 
-#: templates/suggest.html:110
+#: templates/suggest.html:116
 msgid "Insira a URL de referência"
 msgstr "Enter a URL of reference"
 
-#: templates/suggest.html:113
+#: templates/suggest.html:119
 msgid "Algum comentário sobre o monumento?"
 msgstr "Any comments on the monument?"
 
-#: templates/suggest.html:118
+#: templates/suggest.html:124
 msgid "Enviar sugestão"
 msgstr "Send suggestion"
 
