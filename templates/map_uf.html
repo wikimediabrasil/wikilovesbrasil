@@ -109,6 +109,7 @@
         const suggestions_url = "{{ url_for('suggest', uf=uf)}}";
         const instruction = "{{ _('Selecione ou pesquise um monumento') }}";
     </script>
+    <script type="text/javascript">var lang = '{{ lang }}';</script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/map_uf.js') }}"></script>
     <script type="text/javascript">{{ markers|safe }}</script>
 {% endblock %}

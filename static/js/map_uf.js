@@ -485,3 +485,28 @@ let P1766 = L.featureGroup.subGroup(markers_with_image).addTo(map),
     P8592 = L.featureGroup.subGroup(markers_with_image).addTo(map),
     P9721 = L.featureGroup.subGroup(markers_with_image).addTo(map),
     P9906 = L.featureGroup.subGroup(markers_with_image).addTo(map);
+
+// Helper functions to make HTML smaller
+const wlmMarkerTranslations = {
+  pt_br: "Ver mais informações e enviar fotografias",
+  pt: "Ver mais informações e enviar fotografias",
+  en: "See more information and send photos",
+  nl: "Bekijk meer informatie en stuur foto's"
+};
+
+const verTexto = wlmMarkerTranslations[lang] || wlmMarkerTranslations.pt_br;
+
+const WlmMarker = (id, lon, lat, icon, label, layers_str = []) => {
+  const m = L.marker({lon, lat}, {icon, item: id, label})
+    .bindTooltip(label, {direction: 'top', offset: [0, -37]})
+    .bindPopup(
+      `<span style='text-align:center'><b>${label}</b></span><br><br>` +
+      `<a class='custom-link' target='_self' href='/monument/${id}'>` +
+      `<button class='send_button'>` +
+      `<i class='fa-solid fa-arrow-up-from-bracket'></i> ` +
+      `${verTexto}</div>`,
+      {closeButton: false}
+    )
+    .on('click', markerOnClick);
+  layers_str.forEach(l => m.addTo(l));
+};

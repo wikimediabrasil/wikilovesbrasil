@@ -4,9 +4,11 @@ import yaml
 import gspread
 import configparser
 import datetime
+import time
 
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify, g, flash
 from flask_babel import Babel, gettext
+from flask_caching import Cache
 from requests_oauthlib import OAuth1Session
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -41,6 +43,11 @@ app.config['SQLALCHEMY_POOL_SIZE'] = 10
 app.config['SQLALCHEMY_POOL_TIMEOUT'] = 30
 app.config['SQLALCHEMY_POOL_RECYCLE'] = 280
 app.config['SQLALCHEMY_POOL_PRE_PING'] = True
+app.config["CACHE_TYPE"] = "FileSystemCache"
+app.config["CACHE_DIR"] = "./cache"
+
+cache = Cache(app)
+cache.delete("update_cache")
 
 db.init_app(app)
 
@@ -125,7 +132,7 @@ def oauth_callback():
 def get_locale():
     if request.args.get('lang'):
         session['lang'] = request.args.get('lang')
-    return session.get('lang', 'pt')
+    return session.get('lang', 'pt_br')
 
 
 BABEL = Babel(app, locale_selector=get_locale)
@@ -225,32 +232,56 @@ def mapa():
 @app.route('/map/<uf>')
 def mapa_uf(uf):
     lang = get_locale()
-    monuments = query_monuments(states_qids[uf.lower()], lang)
-    qids_with_image = []
-    qids_without_image = []
-    comandos = "var "
-
-    for item in monuments:
-        tooltip = item["label"]
-        tooltip_style = "{direction:'top', offset: [0, -37]}"
-        popup = ("<span style='text-align:center'><b>" + item["label"] + "</b></span><br><br>" + "<a class='custom-link' target='_self' href='" + url_for("monumento", qid=item['item']) + "'><button class='send_button'><i class='fa-solid fa-arrow-up-from-bracket'></i> " + gettext("Ver mais informações e enviar fotografias") + "</div>")
-        popup_style = "{closeButton: false}"
-        if "imagem" in item and item["imagem"] != "No-image.png":
-            if "types" in item and item["types"]:
-                comandos += item["item"] + " = L.marker({lon: " + item["coord"][0] + ", lat: " + item["coord"][1] + "}, {icon: greenIcon, item: \"" + item["item"] + "\", label: \"" + item["label"] + "\"})" + ".bindTooltip(\"" + tooltip + "\", " + tooltip_style + ").bindPopup(\"" + popup + "\", " + popup_style + ").on('click', markerOnClick)" + "".join(item["types"]) + ",\n"
-            qids_with_image.append(item["item"])
-        else:
-            comandos += item["item"] + " = L.marker({lon: " + item["coord"][0] + ", lat: " + item["coord"][1] + "}, {icon: redIcon, item: \"" + item["item"] + "\", label: \"" + item["label"] + "\"})" + ".bindTooltip(\"" + tooltip + "\", " + tooltip_style + ").bindPopup(\"" + popup + "\", " + popup_style + ").on('click', markerOnClick).addTo(markers_without_image),\n"
-            qids_without_image.append(item["item"])
-
-        comandos = comandos[:-2] + ";\n"
-
+    print("getting:", uf, lang)
+    markers_data = mapa_markers_data_cached(uf, lang)
     return render_template("map_uf.html",
-                           markers=comandos,
-                           markers_list="[" + ",".join(list(set(qids_without_image+qids_with_image))) + "]",
                            bounds=uf_bounds(uf),
                            lang=lang,
-                           uf=uf)
+                           uf=uf,
+                           **markers_data,
+        )
+
+def mapa_markers_data_cached(uf, lang, force_update=False):
+    key = f"{uf}-{lang}-markers"
+    markers_data = cache.get(key)
+    if force_update or not markers_data:
+        markers_data = mapa_markers_data(uf, lang)
+        cache.set(key, markers_data, timeout=3600 * 24)
+    return markers_data
+
+def mapa_markers_data(uf, lang):
+    qids_with_image = []
+    qids_without_image = []
+    comandos = ""
+    monuments = query_monuments(states_qids[uf.lower()], lang)
+
+    def M(id, lon, lat, icon, label, layers_str):
+        layers = "[" + ", ".join(layers_str) + "]"
+        label = label.replace("`", r"\`")
+        return f"WlmMarker('{id}', {lon}, {lat}, {icon}, `{label}`, {layers} );\n"
+
+    for item in monuments:
+        id = item["item"]
+        lon = item["coord"][0]
+        lat = item["coord"][1]
+        label = item["label"]
+        if "imagem" in item and item["imagem"] != "No-image.png":
+            if "props" in item and item["props"]:
+                icon = "greenIcon"
+                layers = item["props"]
+                comandos += M(id, lon, lat, icon, label, layers)
+            qids_with_image.append(item["item"])
+        else:
+            icon = "redIcon"
+            layers = ["markers_without_image"]
+            comandos += M(id, lon, lat, icon, label, layers)
+            qids_without_image.append(item["item"])
+    return {
+        "markers": comandos,
+        "markers_list": "["
+        + ",".join(list(set(qids_without_image + qids_with_image)))
+        + "]",
+    }
 
 
 @app.route('/mapa/<uf>/geolocalizar')
@@ -458,6 +489,19 @@ def update_db():
     insert_entries_into_database(monuments, monuments_and_locals_df)
     data = datetime.datetime.now().strftime("%Y-%m-%d, %H:%M:%S")
     return f"{data}: {len(monuments)} monumentos foram inseridos!"
+
+
+@app.route('/update_cache')
+def update_monuments_cache():
+    if cache.get("update_cache"):
+        return ("working", 200)
+    cache.set("update_cache", "1", timeout=3600)
+    for lang in ["pt_br", "pt", "en", "nl"]:
+        for uf, qid in states_qids.items():
+            print(f"updating {lang}, {uf}={qid}...")
+            mapa_markers_data_cached(uf, lang, force_update=True)
+            time.sleep(5)
+    cache.delete("update_cache")
 
 
 ##############################################################
