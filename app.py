@@ -21,6 +21,7 @@ from update_database import get_entities_from_wikidata, insert_entries_into_data
 __dir__ = os.path.dirname(__file__)
 app = Flask(__name__)
 app.config.update(yaml.safe_load(open(os.path.join(__dir__, 'config.yaml'))))
+app.config.update(SESSION_COOKIE_SAMESITE="None",SESSION_COOKIE_SECURE=True)
 
 HOME = os.environ.get('HOME') or ""
 replica_path = os.path.join(HOME, 'replica.my.cnf')
