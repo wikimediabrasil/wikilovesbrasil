@@ -14,7 +14,11 @@ def query_wikidata(query):
         "format": "json"
     }
     result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
-    data = result.json()
+    try:
+        data = result.json()
+    except requests.exceptions.JSONDecodeError as e:
+        truncated = result.text[:200]
+        raise requests.exceptions.JSONDecodeError(e.msg, truncated, e.pos)
     return data
 
 
