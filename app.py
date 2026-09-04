@@ -8,7 +8,6 @@ import time
 
 from flask import Flask, render_template, request, redirect, session, url_for, jsonify, g, flash
 from flask_babel import Babel, gettext
-from flask_caching import Cache
 from requests_oauthlib import OAuth1Session
 from oauth2client.service_account import ServiceAccountCredentials
 
@@ -18,6 +17,7 @@ from wikidata import query_monuments, query_monuments_without_coords, query_monu
     get_sitelinks, api_post_request, query_monuments_selected, query_wikidata, get_list_of_qids
 from db_requests import get_pins
 from db import db
+from extensions import cache
 from update_database import get_entities_from_wikidata, insert_entries_into_database
 
 __dir__ = os.path.dirname(__file__)
@@ -46,7 +46,24 @@ app.config['SQLALCHEMY_POOL_PRE_PING'] = True
 app.config["CACHE_TYPE"] = "FileSystemCache"
 app.config["CACHE_DIR"] = "./cache"
 
-cache = Cache(app)
+# Tamanho máximo: 100MB
+app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
+
+# Tipos de imagem que aceitamos receber no /send_file.
+ALLOWED_IMAGE_MIME_TYPES = {"image/jpg", "image/jpeg", "image/png", "image/tiff", "image/webp", "image/svg+xml"}
+
+
+def validate_upload(uploaded_file):
+    """Confere se o arquivo é mesmo uma imagem"""
+    if not uploaded_file or not uploaded_file.filename:
+        return gettext(u"Nenhum arquivo foi enviado.")
+
+    if uploaded_file.mimetype not in ALLOWED_IMAGE_MIME_TYPES:
+        return gettext(u"Tipo de arquivo não permitido. Envie uma imagem (JPG, JPEG, PNG, TIFF, WEBP ou SVG).")
+
+    return None
+
+cache.init_app(app)
 cache.delete("update_cache")
 
 db.init_app(app)
@@ -199,10 +216,12 @@ states_qids = {
 def page_not_found(e):
     username = get_username(commons_project_api)
     lang = get_locale()
+    original = getattr(e, "original_exception", None)
+    error_message = original.args[0] if original and original.args else getattr(e, "description", str(e))
     return render_template('error.html',
                            username=username,
                            lang=lang,
-                           error=e.original_exception.args[0])
+                           error=error_message)
 
 
 # Função para exibir a tela de descrição do aplicativo
@@ -421,6 +440,55 @@ def uf_bounds(uf):
     return bounds[uf.lower()]
 
 
+# ==================================================================================================================== #
+# TABELA DE MENSAGENS PARA CADA RESPOSTA POSSÍVEL DO COMMONS
+# ==================================================================================================================== #
+def _upload_error_rules():
+    warnings = lambda data: data.get("upload", {}).get("warnings", {})
+    error_code = lambda data: data.get("error", {}).get("code")
+
+    return [
+        (lambda data: error_code(data) == "fileexists-shared-forbidden",
+         lambda data: gettext(u"Uma imagem com este exato título já existe. Por favor, reformule o título.")),
+
+        (lambda data: "duplicate" in warnings(data),
+         lambda data: gettext(u"Esta imagem é uma duplicata exata da imagem https://commons.wikimedia.org/wiki/File:%(file_)s",
+                               file_=warnings(data)["duplicate"][0])),
+
+        (lambda data: "duplicate-archive" in warnings(data),
+         lambda data: gettext(u"Esta imagem é uma duplicata exata de uma outra imagem que foi deletada da base.")),
+
+        (lambda data: "was-deleted" in warnings(data),
+         lambda data: gettext(u"Uma outra imagem costumava utilizar este mesmo título. Por favor, reformule o título.")),
+
+        (lambda data: "exists" in warnings(data),
+         lambda data: gettext(u"Uma imagem com este exato título já existe. Por favor, reformule o título.")),
+
+        # TODO: lockmanager-fail-conflict não impede o envio de fato acontecer.
+        # Por enquanto, tratamos como sucesso.
+        (lambda data: error_code(data) == "lockmanager-fail-conflict",
+         lambda data: gettext(u"Imagem enviada com sucesso! Verifique suas contribuições clicando em seu nome de usuário(a).") + " (lockmanager-fail-conflict)"),
+    ]
+
+
+def _interpret_upload_response(data):
+    """Devolve (status_code, message) a partir da resposta do Commons."""
+    for matches, build_message in _upload_error_rules():
+        if matches(data):
+            # lockmanager-fail-conflict é o único caso de "erro" que na
+            # verdade conta como sucesso (ver TODO acima).
+            status = "SUCCESS" if data.get("error", {}).get("code") == "lockmanager-fail-conflict" else "ERROR"
+            return status, build_message(data)
+
+    if "error" in data:
+        return "ERROR", data["error"]["code"]
+
+    if data.get("upload", {}).get("result") == "Success":
+        return "SUCCESS", gettext(u"Imagem enviada com sucesso! Verifique suas contribuições clicando em seu nome de usuário(a).")
+
+    return "ERROR", gettext(u"Error.")
+
+
 @app.route('/send_file', methods=["POST"])
 def send_file():
     username = get_username(commons_project_api)
@@ -430,34 +498,19 @@ def send_file():
         uploaded_file = request.files.getlist('uploaded_file')[0]
         form = request.form
 
-        # Enviar imagem
-        if username:
-            text = build_text(form)
-            data = upload_file(uploaded_file, form, text)
-            if "error" in data and data["error"]["code"] == "fileexists-shared-forbidden":
-                message = gettext(u"Uma imagem com este exato título já existe. Por favor, reformule o título.")
-            elif "upload" in data and "warnings" in data["upload"] and "duplicate" in data["upload"]["warnings"]:
-                message = gettext(u"Esta imagem é uma duplicata exata da imagem https://commons.wikimedia.org/wiki/File:%(file_)s", file_=data["upload"]["warnings"]["duplicate"][0])
-            elif "upload" in data and "warnings" in data["upload"] and "duplicate-archive" in data["upload"]["warnings"]:
-                message = gettext(u"Esta imagem é uma duplicata exata de uma outra imagem que foi deletada da base.")
-            elif "upload" in data and "warnings" in data["upload"] and "was-deleted" in data["upload"]["warnings"]:
-                message = gettext(u"Uma outra imagem costumava utilizar este mesmo título. Por favor, reformule o título.")
-            elif "upload" in data and "warnings" in data["upload"] and "exists" in data["upload"]["warnings"]:
-                message = gettext(u"Uma imagem com este exato título já existe. Por favor, reformule o título.")
-            # TODO:lockmanager-fail-conflict is an error that does not impact in sending the files. For now, treat as success
-            elif "error" in data and "code" in data["error"] and data["error"]["code"] == "lockmanager-fail-conflict":
-                message = gettext(u"Imagem enviada com sucesso! Verifique suas contribuições clicando em seu nome de usuário(a).") + " (lockmanager-fail-conflict)"
-                status_code = "SUCCESS"
-            elif "error" in data:
-                message = data["error"]["code"]
-            elif "upload" in data and "result" in data["upload"] and data["upload"]["result"] == "Success":
-                message = gettext(u"Imagem enviada com sucesso! Verifique suas contribuições clicando em seu nome de usuário(a).")
-                status_code = "SUCCESS"
-            else:
-                message = gettext(u"Error.")
-        else:
+        if not username:
             message = gettext(u'Ocorreu algum erro! Verifique o formulário e tente novamente. Caso o erro persista, '
                               u'por favor, reporte em https://github.com/wikimediabrasil/wikilovesbrasil/issues')
+            return jsonify({"message": message, "status": status_code, "filename": form["filename"]})
+
+        error = validate_upload(uploaded_file)
+        if error:
+            return jsonify({"message": error, "status": status_code, "filename": form["filename"]})
+
+        text = build_text(form)
+        data = upload_file(uploaded_file, form, text)
+        status_code, message = _interpret_upload_response(data)
+
         return jsonify({"message": message, "status": status_code, "filename": form["filename"]})
 
 

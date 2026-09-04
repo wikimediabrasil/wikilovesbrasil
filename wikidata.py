@@ -13,7 +13,7 @@ def query_wikidata(query):
         "query": query,
         "format": "json"
     }
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
+    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
     try:
         data = result.json()
     except requests.exceptions.JSONDecodeError as e:
@@ -401,7 +401,7 @@ def get_item(qid, lang):
         "format": "json"
     }
 
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
+    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
 
     data = result.json()
     properties = data["entities"][qid]["claims"]
@@ -417,7 +417,7 @@ def get_category_info(cat):
         "titles": cat
     }
 
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
+    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
 
     data = result.json()
     for key, val in data["query"]["pages"].items():
@@ -440,7 +440,7 @@ def get_article(lang, article):
         "format": "json"
     }
 
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
+    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
     data = result.json()
     return data["query"]["pages"].values().__iter__().__next__()["extract"]
 
@@ -454,7 +454,7 @@ def get_sitelinks(qid):
         "format": "json"
     }
 
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil'})
+    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
     data = result.json()
 
     sitelinks = {}

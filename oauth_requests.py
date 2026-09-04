@@ -1,6 +1,12 @@
 from flask import current_app, session
 from requests_oauthlib import OAuth1Session
 from urllib.parse import urlencode
+from extensions import cache
+
+# Um token CSRF continua válido enquanto a sessão de login do usuário
+# durar. Cacheamos por um tempo curto (5 min) só para evitar pedir um
+# token novo a cada arquivo de um mesmo envio em lote.
+TOKEN_CACHE_SECONDS = 300
 
 
 # ==================================================================================================================== #
@@ -38,7 +44,19 @@ def get_username(url_project):
     return session['username']
 
 
+def _token_cache_key(url_project):
+    # session['owner_key'] é o identificador da sessão de login OAuth do
+    # usuário atual — combinado com o projeto (commons/wikidata), dá uma
+    # chave única por pessoa logada.
+    return f"csrf_token_{session.get('owner_key')}_{url_project}"
+
+
 def get_token(url_project):
+    cache_key = _token_cache_key(url_project)
+    token = cache.get(cache_key)
+    if token:
+        return token
+
     params = {
         'action': 'query',
         'meta': 'tokens',
@@ -47,7 +65,15 @@ def get_token(url_project):
     }
     reply = api_request(params, url_project)
     token = reply['query']['tokens']['csrftoken']
+    cache.set(cache_key, token, timeout=TOKEN_CACHE_SECONDS)
     return token
+
+
+def invalidate_token(url_project):
+    """Descarta o token cacheado. Use isto se o Commons responder com
+    o erro 'badtoken' — nesse caso o token guardado ficou inválido e
+    precisamos pedir um novo na próxima chamada."""
+    cache.delete(_token_cache_key(url_project))
 
 
 # ==================================================================================================================== #

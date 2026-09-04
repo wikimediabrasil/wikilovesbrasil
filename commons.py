@@ -3,27 +3,41 @@ import json
 from flask import current_app
 from wikidata import query_wikidata
 from datetime import date
-from oauth_requests import get_token, get_username, raw_post_request
+from oauth_requests import get_token, get_username, raw_post_request, invalidate_token
+from extensions import cache
 
 url_project = "https://commons.wikimedia.org/w/api.php"
+
+# Quanto tempo guardamos a informação do monumento do Wikidata = 1 hora
+BUILD_TEXT_QUERY_CACHE_SECONDS = 3600
 
 
 def upload_file(uploaded_file, form, text):
     token = get_token(url_project)
+    file_bytes = uploaded_file.read()
+    media_file = {'file': (form["filename"], file_bytes, 'multipart/form-data')}
 
-    params = {
-        "action": "upload",
-        "filename": form["name"] + get_file_ext(form["filename"]),
-        "format": "json",
-        "token": token,
-        "text": text,
-        "comment": "Uploaded with Wiki Loves Brasil"
-    }
+    def do_upload(csrf_token):
+        params = {
+            "action": "upload",
+            "filename": form["name"] + get_file_ext(form["filename"]),
+            "format": "json",
+            "token": csrf_token,
+            "text": text,
+            "comment": "Uploaded with Wiki Loves Brasil"
+        }
+        req = raw_post_request(media_file, params, url_project)
+        return req.json()
 
-    media_file = {'file': (form["filename"], uploaded_file.read(), 'multipart/form-data')}
+    data = do_upload(token)
 
-    req = raw_post_request(media_file, params, url_project)
-    data = req.json()
+    # Se o token cacheado expirou nesse meio-tempo, o Commons responde
+    # com o código "badtoken". Nesse caso, pedimos um token novo e
+    # tentamos enviar de novo, uma única vez.
+    if "error" in data and data["error"].get("code") == "badtoken":
+        invalidate_token(url_project)
+        new_token = get_token(url_project)
+        data = do_upload(new_token)
 
     return data
 
@@ -35,19 +49,23 @@ def build_text(form):
     qid = form["qid"]
     timestamp = form["filedate"]
 
-    result = query_wikidata("SELECT DISTINCT ?item ?itemDescription ?name ?local ?localLabel "
-                            "?local_cat ?estado ?estadoLabel (LANG(?itemDescription) AS ?lang) "
-                            "WHERE { "
-                            "BIND(wd:" + qid + " AS ?item) "
-                            "OPTIONAL { [] schema:about ?item; "
-                            "schema:isPartOf <https://commons.wikimedia.org/>; "
-                            "schema:name ?name. } "
-                            "{ ?item p:P131/ps:P131 ?local. } UNION { ?item p:P131/ps:P131 [wdt:P131 ?local]. } "
-                            "{ ?local wdt:P31 wd:Q3184121 } UNION { ?local wdt:P31 wd:Q515 } "
-                            "?local wdt:P131 ?estado. "
-                            "?estado wdt:P31 wd:Q485258. "
-                            "OPTIONAL { ?local wdt:P373 ?local_cat. } "
-                            "SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. }}")
+    cache_key = f"build_text_query_{qid}"
+    result = cache.get(cache_key)
+    if result is None:
+        result = query_wikidata("SELECT DISTINCT ?item ?itemDescription ?name ?local ?localLabel "
+                                "?local_cat ?estado ?estadoLabel (LANG(?itemDescription) AS ?lang) "
+                                "WHERE { "
+                                "BIND(wd:" + qid + " AS ?item) "
+                                "OPTIONAL { [] schema:about ?item; "
+                                "schema:isPartOf <https://commons.wikimedia.org/>; "
+                                "schema:name ?name. } "
+                                "{ ?item p:P131/ps:P131 ?local. } UNION { ?item p:P131/ps:P131 [wdt:P131 ?local]. } "
+                                "{ ?local wdt:P31 wd:Q3184121 } UNION { ?local wdt:P31 wd:Q515 } "
+                                "?local wdt:P131 ?estado. "
+                                "?estado wdt:P31 wd:Q485258. "
+                                "OPTIONAL { ?local wdt:P373 ?local_cat. } "
+                                "SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. }}")
+        cache.set(cache_key, result, timeout=BUILD_TEXT_QUERY_CACHE_SECONDS)
 
     lang = ""
     descr = ""

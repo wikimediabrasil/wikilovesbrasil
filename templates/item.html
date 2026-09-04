@@ -417,8 +417,10 @@
                         let suggestedFilename = monumentName + " - " + monumentLocal + " - " + timestampFormatting(EXIF.getTag(this, "DateTimeOriginal"), this.lastModified);
                         let coordinates = clearCoordinates(EXIF.getAllTags(this));
 
-                        // Generating a thumbnail image
-                        // Part of the code adapted from https://labs.madisoft.it/javascript-image-compression-and-resizing
+                        // Gera uma miniatura (thumbnail) só para pré-visualização na tela.
+                        // O arquivo original (em tamanho real) é o que de fato é enviado
+                        // ao Commons depois, em /send_file — esta miniatura nunca sai do navegador.
+                        // Parte do código adaptado de https://labs.madisoft.it/javascript-image-compression-and-resizing
                         const file = this;
                         const blobURL = URL.createObjectURL(file);
                         const image = new Image();
@@ -431,11 +433,6 @@
                             canvas.height = newHeight;
                             const ctx = canvas.getContext("2d");
                             ctx.drawImage(image, 0, 0, newWidth, newHeight);
-                            canvas.toBlob(
-                                (blob) => {},
-                                MIME_TYPE,
-                                QUALITY
-                            );
 
                             // Add the element with all the information and thumbnail into the container
                             let elem = ([{ filename: filename, dateTimeOriginal: dateFormatted, coordinates: coordinates, size: filesize, suggestedFilename: suggestedFilename }].map(Item));
@@ -567,63 +564,79 @@
             }
         });
 
+        // Envia no máximo esta quantidade de arquivos ao mesmo tempo.
+        const MAX_PARALLEL_UPLOADS = 2;
+
+        function uploadOneFile(_file, e) {
+            let formData = new FormData();
+            const file_id = _file.name;
+            formData.append("qid", e.target.elements["qid"].value);
+            formData.append("filename", e.target.elements["filename_" + file_id].value);
+            formData.append("name", e.target.elements["suggestedFilename_" + file_id].value);
+            formData.append("image_type", e.target.elements["image_type_" + file_id].value);
+            formData.append("coordinates", e.target.elements["coordinates_" + file_id].value);
+            formData.append("filedate", e.target.elements["filedate_" + file_id].value);
+            formData.append('uploaded_file', _file);
+
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    type: "POST",
+                    url: "/send_file",
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        console.log("message: " + response.message + "\nstatus: " + response.status + "\nfilename: " + response.filename);
+                        let container = document.getElementById("file_upload_container_" + response.filename);
+                        if (response.status === "ERROR") {
+                            container.style.backgroundColor = "#ff6b6b";
+                            container.title = response.message;
+                            reject(response);
+                        } else {
+                            let sent = document.createElement("span");
+                            sent.className = "sent_icon";
+                            sent.id = "sent_" + response.filename;
+                            sent.innerHTML = "<i class=\"fa-solid fa-check\"></i></i> {{ _('Arquivo enviado') }}</button>";
+                            container.style.backgroundColor = "#8aff70";
+                            document.getElementById("remove_" + response.filename).replaceWith(sent);
+                            resolve(response);
+                        }
+                        document.getElementById("loading_" + response.filename).remove();
+                    },
+                    error: function (response) {
+                        let container = document.getElementById("file_upload_container_" + response.filename);
+                        container.style.backgroundColor = "#ff6b6b";
+                        document.getElementById("loading_" + response.filename).remove();
+                        document.getElementById("remove_" + response.filename).remove();
+                        reject(response);
+                    }
+                });
+            });
+        }
+
+        // Roda as promessas em "lotes" de MAX_PARALLEL_UPLOADS por vez,
+        // em vez de disparar todas simultaneamente.
+        async function uploadInBatches(files, e, batchSize) {
+            const results = [];
+            for (let i = 0; i < files.length; i += batchSize) {
+                const batch = files.slice(i, i + batchSize);
+                const batchResults = await Promise.allSettled(
+                    batch.map((_file) => uploadOneFile(_file, e))
+                );
+                results.push(...batchResults);
+            }
+            return results;
+        }
+
         $("#upload-images").on("submit", function (e) {
             e.preventDefault();
             const error = "{{ _('Ocorreu algum erro! Verifique que fez login e revise o formulário. Caso o erro persista, por favor, reporte em https://github.com/wikimediabrasil/wikilovesbrasil/issues')}}";
 
-            let promises = _Files.map((_file) => {
-                let formData = new FormData();
-                const file_id = _file.name;
-                formData.append("qid", e.target.elements["qid"].value);
-                formData.append("filename", e.target.elements["filename_" + file_id].value);
-                formData.append("name", e.target.elements["suggestedFilename_" + file_id].value);
-                formData.append("image_type", e.target.elements["image_type_" + file_id].value);
-                formData.append("coordinates", e.target.elements["coordinates_" + file_id].value);
-                formData.append("filedate", e.target.elements["filedate_" + file_id].value);
-                formData.append('uploaded_file', _file);
-
-                return new Promise((resolve, reject) => {
-                    $.ajax({
-                        type: "POST",
-                        url: "/send_file",
-                        data: formData,
-                        cache: false,
-                        contentType: false,
-                        processData: false,
-                        success: function (response) {
-                            console.log("message: " + response.message + "\nstatus: " + response.status + "\nfilename: " + response.filename);
-                            let container = document.getElementById("file_upload_container_" + response.filename);
-                            if (response.status === "ERROR") {
-                                container.style.backgroundColor = "#ff6b6b";
-                                container.title = response.message;
-                                reject(response);
-                            } else {
-                                let sent = document.createElement("span");
-                                sent.className = "sent_icon";
-                                sent.id = "sent_" + response.filename;
-                                sent.innerHTML = "<i class=\"fa-solid fa-check\"></i></i> {{ _('Arquivo enviado') }}</button>";
-                                container.style.backgroundColor = "#8aff70";
-                                document.getElementById("remove_" + response.filename).replaceWith(sent);
-                                resolve(response);
-                            }
-                            document.getElementById("loading_" + response.filename).remove();
-                        },
-                        error: function (response) {
-                            console.log(error);
-                            let container = document.getElementById("file_upload_container_" + response.filename);
-                            container.style.backgroundColor = "#ff6b6b";
-                            document.getElementById("loading_" + response.filename).remove();
-                            document.getElementById("remove_" + response.filename).remove();
-                            reject(response);
-                        }
-                    });
-                });
-            });
-
-            Promise.allSettled(promises).then((results) => {
+            uploadInBatches(_Files, e, MAX_PARALLEL_UPLOADS).then((results) => {
                 results.forEach((result) => {
                     if (result.status === "rejected") {
-                        console.log("Some uploads failed:", result.reason);
+                        console.log(error, result.reason);
                     }
                 });
                 console.log("All files processed.");
