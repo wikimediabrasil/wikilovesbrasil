@@ -12,12 +12,12 @@ from requests_oauthlib import OAuth1Session
 from oauth2client.service_account import ServiceAccountCredentials
 
 from oauth_requests import get_username, get_token
-from commons import upload_file, build_text
+from commons import upload_file, build_text, WikidataQueryError
 from wikidata import query_monuments, query_monuments_without_coords, query_monument, get_category_info, get_article, \
     get_sitelinks, api_post_request, query_monuments_selected, query_wikidata, get_list_of_qids
 from db_requests import get_pins
 from db import db
-from extensions import cache
+from extensions import cache, USER_AGENT
 from update_database import get_entities_from_wikidata, insert_entries_into_database
 
 __dir__ = os.path.dirname(__file__)
@@ -102,7 +102,7 @@ def login():
     oauth = OAuth1Session(client_key,
                           client_secret=client_secret,
                           callback_uri='oob')
-    fetch_response = oauth.fetch_request_token(request_token_url)
+    fetch_response = oauth.fetch_request_token(request_token_url, headers={'User-Agent': USER_AGENT})
 
     session['owner_key'] = fetch_response.get('oauth_token')
     session['owner_secret'] = fetch_response.get('oauth_token_secret')
@@ -134,7 +134,7 @@ def oauth_callback():
                           resource_owner_secret=session['owner_secret'],
                           verifier=verifier)
 
-    oauth_tokens = oauth.fetch_access_token(access_token_url)
+    oauth_tokens = oauth.fetch_access_token(access_token_url, headers={'User-Agent': USER_AGENT})
     session['owner_key'] = oauth_tokens.get('oauth_token')
     session['owner_secret'] = oauth_tokens.get('oauth_token_secret')
     next_page = session.get('after_login')
@@ -507,8 +507,14 @@ def send_file():
         if error:
             return jsonify({"message": error, "status": status_code, "filename": form["filename"]})
 
-        text = build_text(form)
-        data = upload_file(uploaded_file, form, text)
+        try:
+            text = build_text(form)
+            data = upload_file(uploaded_file, form, text)
+        except WikidataQueryError as e:
+            app.logger.warning(f"Wikidata indisponível durante upload: {e}")
+            message = gettext(u"O Wikidata está temporariamente indisponível ou demorando para responder. "
+                              u"Por favor, tente enviar novamente em alguns instantes.")
+            return jsonify({"message": message, "status": status_code, "filename": form["filename"]})
         status_code, message = _interpret_upload_response(data)
 
         return jsonify({"message": message, "status": status_code, "filename": form["filename"]})

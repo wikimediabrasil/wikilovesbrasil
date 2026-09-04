@@ -7,19 +7,31 @@ from requests_oauthlib import OAuth1Session
 from urllib.parse import unquote
 
 
-def query_wikidata(query):
+class WikidataQueryError(Exception):
+    pass
+
+def query_wikidata(query, timeout=60):
     url = "https://query.wikidata.org/sparql"
     params = {
         "query": query,
         "format": "json"
     }
-    result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'})
     try:
-        data = result.json()
-    except requests.exceptions.JSONDecodeError as e:
+        result = requests.get(url=url, params=params, headers={'User-agent': 'WLM Brasil/1.0 (wikilovesbrasil.toolforge.org <wikilovesbrasil@wmnobrasil.org>)'}, timeout=timeout)
+    except requests.exceptions.Timeout:
+        raise WikidataQueryError("O Wikidata Query Service não respondeu a tempo (timeout de "
+                                 f"{timeout}s). Tente novamente em alguns instantes.")
+    except requests.exceptions.RequestException as e:
+        raise WikidataQueryError(f"Falha de rede ao consultar o Wikidata Query Service: {e}")
+
+    try:
+        return result.json()
+    except requests.exceptions.JSONDecodeError:
         truncated = result.text[:200]
-        raise requests.exceptions.JSONDecodeError(e.msg, truncated, e.pos)
-    return data
+        raise WikidataQueryError(
+            f"O Wikidata Query Service respondeu com status {result.status_code} "
+            f"em vez de JSON (provavelmente sobrecarregado): {truncated!r}"
+        )
 
 
 def query_monuments(qid, lang):

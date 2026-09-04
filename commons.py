@@ -1,7 +1,7 @@
 import os
 import json
 from flask import current_app
-from wikidata import query_wikidata
+from wikidata import query_wikidata, WikidataQueryError
 from datetime import date
 from oauth_requests import get_token, get_username, raw_post_request, invalidate_token
 from extensions import cache
