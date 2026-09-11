@@ -5,14 +5,15 @@ import gspread
 import configparser
 import datetime
 import time
+import threading
 
-from flask import Flask, render_template, request, redirect, session, url_for, jsonify, g, flash
+from flask import Flask, render_template, request, redirect, session, url_for, jsonify, g, flash, current_app
 from flask_babel import Babel, gettext
 from requests_oauthlib import OAuth1Session
 from oauth2client.service_account import ServiceAccountCredentials
 
 from oauth_requests import get_username, get_token
-from commons import upload_file, build_text, WikidataQueryError
+from commons import upload_file, build_text, warm_upload_cache, WikidataQueryError
 from wikidata import query_monuments, query_monuments_without_coords, query_monument, get_category_info, get_article, \
     get_sitelinks, api_post_request, query_monuments_selected, query_wikidata, get_list_of_qids
 from db_requests import get_pins
@@ -77,11 +78,15 @@ wikidata_project_api = "https://www.wikidata.org/w/api.php"
 # ==================================================================================================================== #
 @app.before_request
 def init_profile():
+    if request.endpoint == 'static':
+        return
     g.profiling = []
 
 
 @app.before_request
 def global_user():
+    if request.endpoint == 'static':
+        return
     g.user = get_username(commons_project_api)
 
 
@@ -371,6 +376,14 @@ def monumento(qid):
             metadata["article"] = get_article(aux_lang, metadata["sitelinks"][aux_lang])
             metadata["article_wiki"] = aux_lang
             metadata["article_name"] = metadata["sitelinks"][aux_lang]
+
+        app_obj = current_app._get_current_object()
+
+        def _warm(qid=qid):
+            with app_obj.app_context():
+                warm_upload_cache(qid)
+
+        threading.Thread(target=_warm, daemon=True).start()
 
         return render_template("item.html",
                                metadata=metadata,

@@ -45,11 +45,12 @@ def upload_file(uploaded_file, form, text):
 # ==================================================================================================================== #
 # FUNÇÕES
 # ==================================================================================================================== #
-def build_text(form):
-    qid = form["qid"]
-    timestamp = form["filedate"]
+def _build_text_cache_key(qid):
+    return f"build_text_query_{qid}"
 
-    cache_key = f"build_text_query_{qid}"
+
+def _query_and_cache_monument_upload_info(qid):
+    cache_key = _build_text_cache_key(qid)
     result = cache.get(cache_key)
     if result is None:
         result = query_wikidata("SELECT DISTINCT ?item ?itemDescription ?name ?local ?localLabel "
@@ -66,6 +67,21 @@ def build_text(form):
                                 "OPTIONAL { ?local wdt:P373 ?local_cat. } "
                                 "SERVICE wikibase:label { bd:serviceParam wikibase:language 'pt-br,pt,en'. }}")
         cache.set(cache_key, result, timeout=BUILD_TEXT_QUERY_CACHE_SECONDS)
+    return result
+
+
+def warm_upload_cache(qid):
+    try:
+        _query_and_cache_monument_upload_info(qid)
+    except WikidataQueryError:
+        pass
+
+
+def build_text(form):
+    qid = form["qid"]
+    timestamp = form["filedate"]
+
+    result = _query_and_cache_monument_upload_info(qid)
 
     lang = ""
     descr = ""
